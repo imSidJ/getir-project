@@ -5,11 +5,16 @@ const getData = async ({ startDate, endDate, minCount, maxCount }) => {
     const res = await Record.aggregate([
       {
         $match: {
-          createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
+          $and: [
+            {
+              createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
+            },
+            { $expr: { $gt: [{ $sum: '$counts' }, minCount] } },
+            { $expr: { $lt: [{ $sum: '$counts' }, maxCount] } },
+          ],
         },
       },
-      { $match: { $expr: { $gt: [{ $sum: '$counts' }, minCount] } } },
-      { $match: { $expr: { $lt: [{ $sum: '$counts' }, maxCount] } } },
+
       {
         $project: {
           _id: 0,
