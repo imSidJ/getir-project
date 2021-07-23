@@ -6,25 +6,31 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-openapi-validator": "^4.12.14",
     "mongodb": "^4.0.1",
     "mongoose": "^5.13.3",
     "pino": "^7.0.0-rc.1",
-    "sinon-mongoose": "^2.3.0",
     "swagger-ui-express": "^4.1.6",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "eslint": "^7.31.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^3.4.0",
     "jest": "^27.0.6",
-    "mockingoose": "^2.15.2",
+    "prettier": "2.3.2",
     "sinon": "^11.1.1",
     "supertest": "^6.1.4"
   },
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint --fix"
   },
   "keywords": [],
-  "author": "",
+  "author": "Siddharth Jadhav",
   "license": "ISC"
 }

@@ -3,6 +3,7 @@ info:
   title: Getir Project
   version: 1.0.0
 servers:
+  - url: https://sid-getir-project.herokuapp.com/
   - url: http://localhost:3000
 paths:
   /getir:
@@ -39,3 +40,34 @@ paths:
               endDate: "2018-02-02"
               minCount: 2500,
               maxCount: 3000
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  msg:
+                    type: string
+                  records:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                      createdAt:
+                        type: string
+                      totalCount:
+                        type: integer
+              example:
+                code: 0
+                msg: Success
+                records:
+                  - key: ibfRLaFT
+                    createdAt: 2016-12-25T16:43:27.909Z
+                    totalCount: 2892
+                  - key: IAEfpWPm
+                    createdAt: 2016-12-22T04:45:57.372Z
+                    totalCount: 2785

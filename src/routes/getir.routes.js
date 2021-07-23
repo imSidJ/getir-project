@@ -1,9 +1,9 @@
-const express = require("express");
+const express = require('express');
 
-const { getirController } = require("../controllers");
+const { getirController } = require('../controllers');
 
 const router = express.Router();
 
-router.post("/", getirController);
+router.post('/', getirController);
 
 module.exports = router;

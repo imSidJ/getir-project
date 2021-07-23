@@ -1,4 +1,4 @@
-const getirService = require("./getir.services");
+const getirService = require('./getir.services');
 
 module.exports = {
   getirService,
