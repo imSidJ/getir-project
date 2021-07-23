@@ -1,8 +1,11 @@
 const request = require('supertest');
 const sinon = require('sinon');
 const { getirService } = require('../services');
+const logger = require('../helpers/logger');
 
 const app = require('../app');
+
+logger.level = 'silent';
 
 describe('Check request', () => {
   it('should return 400 when startDate is missing', (done) => {
@@ -14,7 +17,11 @@ describe('Check request', () => {
         minCount: 2500,
         maxCount: 3000,
       })
-      .expect(400, done);
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.reason).toBe('Invalid parameters in request');
+        return done();
+      });
   });
 
   it('should return 400 when endDate is missing', (done) => {
@@ -26,7 +33,11 @@ describe('Check request', () => {
         minCount: 2500,
         maxCount: 3000,
       })
-      .expect(400, done);
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.reason).toBe('Invalid parameters in request');
+        return done();
+      });
   });
 
   it('should return 400 when minCount is missing', (done) => {
@@ -38,7 +49,11 @@ describe('Check request', () => {
         endDate: '2018-02-02',
         minCount: 2500,
       })
-      .expect(400, done);
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.reason).toBe('Invalid parameters in request');
+        return done();
+      });
   });
 
   it('should return 400 when maxCount is missing', (done) => {
@@ -50,7 +65,11 @@ describe('Check request', () => {
         endDate: '2018-02-02',
         maxCount: 3000,
       })
-      .expect(400, done);
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.reason).toBe('Invalid parameters in request');
+        return done();
+      });
   });
 
   it('should return 400 when startDate has invalid format', (done) => {
@@ -63,7 +82,11 @@ describe('Check request', () => {
         minCount: 2500,
         maxCount: 3000,
       })
-      .expect(400, done);
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.reason).toBe('Invalid parameters in request');
+        return done();
+      });
   });
 
   it('should return 400 when endDate has invalid format', (done) => {
@@ -76,7 +99,11 @@ describe('Check request', () => {
         minCount: 2500,
         maxCount: 3000,
       })
-      .expect(400, done);
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.reason).toBe('Invalid parameters in request');
+        return done();
+      });
   });
 
   it('should return 400 when minCount has invalid format', (done) => {
@@ -89,7 +116,11 @@ describe('Check request', () => {
         minCount: '2500',
         maxCount: 3000,
       })
-      .expect(400, done);
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.reason).toBe('Invalid parameters in request');
+        return done();
+      });
   });
 
   it('should return 400 when maxCount has invalid format', (done) => {
@@ -102,7 +133,11 @@ describe('Check request', () => {
         minCount: 2500,
         maxCount: '3000',
       })
-      .expect(400, done);
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.reason).toBe('Invalid parameters in request');
+        return done();
+      });
   });
 });
 
@@ -114,11 +149,23 @@ describe('Check Response', () => {
       {
         key: 'ibfRLaFT',
         createdAt: '2016-12-25T16:43:27.909Z',
-        totalCount: 2000,
+        totalCount: 2700,
       },
     ];
 
     stub.returns(Promise.resolve(doc));
+
+    const expected = {
+      code: 0,
+      msg: 'Success',
+      records: [
+        {
+          key: 'ibfRLaFT',
+          createdAt: '2016-12-25T16:43:27.909Z',
+          totalCount: 2700,
+        },
+      ],
+    };
 
     await request(app)
       .post('/getir')
@@ -131,14 +178,19 @@ describe('Check Response', () => {
       .set('content-type', 'application/json')
       .expect(200)
       .then((res) => {
-        expect(res.body.code).toBe(0);
-        expect(res.body.msg).toBe('Success');
+        expect(res.body).toMatchObject(expected);
       });
   });
 
   it('should return failed if no matching records found', async () => {
     stub.returns(Promise.resolve([]));
 
+    const expected = {
+      code: 1,
+      msg: 'Failed',
+      records: 'No records found',
+    };
+
     await request(app)
       .post('/getir')
       .send({
@@ -150,8 +202,7 @@ describe('Check Response', () => {
       .set('content-type', 'application/json')
       .expect(200)
       .then((res) => {
-        expect(res.body.code).toBe(1);
-        expect(res.body.msg).toBe('Failed');
+        expect(res.body).toMatchObject(expected);
       });
   });
 });

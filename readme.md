@@ -1,6 +1,10 @@
 <h1 align="center">GETIR PROJECT</h1>
 
-## 🚀 Get Started
+## Swagger Documentation
+
+- API documentation available at - <https://sid-getir-project.herokuapp.com/api-docs/>
+
+## Get Started
 
 **Install Dependencies**
 
@@ -46,7 +50,3 @@ Run the Jest unit tests
 # test: jest
 npm test
 ```
-
-## Try It
-
-- API documentation available at - `https://sid-getir-project.herokuapp.com/api-docs/`

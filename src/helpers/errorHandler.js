@@ -1,7 +1,7 @@
 const errorList = require('../config/errorConfig');
 const logger = require('./logger');
 
-const errorHandler = (err, req, res) => {
+const errorHandler = (err, req, res, next) => {
   logger.error(err.message);
 
   let statusCode = 500;
