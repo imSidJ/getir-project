@@ -1,0 +1,29 @@
+{
+  "name": "getir-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongodb": "^4.0.1",
+    "mongoose": "^5.13.3",
+    "pino": "^7.0.0-rc.1",
+    "sinon-mongoose": "^2.3.0",
+    "swagger-ui-express": "^4.1.6",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "mockingoose": "^2.15.2",
+    "sinon": "^11.1.1",
+    "supertest": "^6.1.4"
+  },
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
