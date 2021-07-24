@@ -1,10 +1,40 @@
 <h1 align="center">GETIR PROJECT</h1>
 
-## Swagger Documentation
+## Try Out
 
-- API documentation available at - <https://sid-getir-project.herokuapp.com/api-docs/>
+- View documentation and test API - <https://sid-getir-project.herokuapp.com/api-docs/>
 
-## Get Started
+## API Details
+
+**Endpoint** - https://sid-getir-project.herokuapp.com/getir
+
+**Method** - POST
+
+**Headers** -
+
+| key          | value                                |
+| ------------ | ------------------------------------ |
+| content-type | application/json                     |
+| x-api-key    | d32a0a83-903e-4147-b399-f308c48f705e |
+
+**Body** -
+
+```
+{
+  "startDate": "2016-01-02",
+  "endDate": "2018-02-02",
+  "minCount": 2500,
+  "maxCount": 3000
+}
+```
+
+### **Rate Limit** - API has a rate limit of 15 requests per minute.
+
+&nbsp;
+
+&nbsp;
+
+## Get Started With Development
 
 **Install Dependencies**
 
@@ -20,7 +50,10 @@ Create a .env file in the root directory. Add the following values -
 ```
 DATABASE_URL=<MongoDB URL>
 PORT=<Server Port>
+API_KEY=<Key to access API>
 ```
+
+&nbsp;
 
 ## Run It
 
@@ -41,6 +74,8 @@ Start App
 # start: node src/server.js
 npm start
 ```
+
+&nbsp;
 
 ## Test It
 

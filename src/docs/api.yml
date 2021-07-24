@@ -8,6 +8,8 @@ servers:
 paths:
   /getir:
     post:
+      security:
+        - ApiKeyAuth: []
       summary: Get data
       requestBody:
         content:
@@ -17,11 +19,11 @@ paths:
               properties:
                 startDate:
                   type: string
-                  pattern: '^\d{4}-\d{2}-\d{2}'
+                  pattern: '^\d{4}-\d{2}-\d{2}$'
                   description: Date in format YYYY-MM-DD
                 endDate:
                   type: string
-                  pattern: '^\d{4}-\d{2}-\d{2}'
+                  pattern: '^\d{4}-\d{2}-\d{2}$'
                   description: Date in format YYYY-MM-DD
                 minCount:
                   type: integer
@@ -36,8 +38,8 @@ paths:
                 - minCount
                 - maxCount
             example:
-              startDate: "2016-01-26"
-              endDate: "2018-02-02"
+              startDate: '2016-01-26'
+              endDate: '2018-02-02'
               minCount: 2500,
               maxCount: 3000
       responses:
@@ -71,3 +73,78 @@ paths:
                   - key: IAEfpWPm
                     createdAt: 2016-12-22T04:45:57.372Z
                     totalCount: 2785
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  error_code:
+                    type: string
+              example:
+                status: 400
+                message: request.body.startDate should match pattern ^d{4}-d{2}-d{2}$
+                error_code: invalid_params
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  error_code:
+                    type: string
+              example:
+                status: 401
+                message: Invalid credentials provided.
+                error_code: invalid_credentials
+        429:
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  error_code:
+                    type: string
+              example:
+                status: 429
+                message: Rate limit exceeded.
+                error_code: limit_exceeded
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  error_code:
+                    type: string
+              example:
+                status: 500
+                message: Unable to process request.
+                error_code: server_error
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
