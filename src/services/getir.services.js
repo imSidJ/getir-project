@@ -14,7 +14,6 @@ const getData = async ({ startDate, endDate, minCount, maxCount }) => {
           ],
         },
       },
-
       {
         $project: {
           _id: 0,

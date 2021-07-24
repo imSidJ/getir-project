@@ -14,8 +14,10 @@ const db = async () => {
     });
 
     logger.info('Connected to DB');
+
+    return true;
   } catch (error) {
-    logger.error(`Mongo connection error - ${error.message}`);
+    logger.error(`Mongo connection error - ${error}`);
   }
 };
 
